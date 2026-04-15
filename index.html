@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CinePremiere - Book Your Experience</title>
+    <title>Tickverse - Book Your Experience</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap"
@@ -171,7 +171,7 @@
               onclick="goHome()"
               class="text-xl md:text-2xl font-black text-primary italic font-headline cursor-pointer tracking-tight"
             >
-              CinePremiere
+              Tickverse
             </h1>
             <div
               id="navBreadcrumb"
@@ -200,18 +200,7 @@
                 Select a movie to begin your experience
               </p>
             </div>
-            <div class="flex flex-wrap items-center gap-3">
-              <button
-                class="px-5 py-2.5 bg-primary text-on-primary rounded-full font-bold text-sm shadow-md shadow-primary/20"
-              >
-                All
-              </button>
-              <button
-                class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest rounded-full font-bold text-sm transition-colors"
-              >
-                Coming Soon
-              </button>
-            </div>
+
           </div>
           <div
             id="moviesGrid"
@@ -322,7 +311,7 @@
             My Bookings
           </h2>
           <p class="text-on-surface-variant font-medium mb-8">
-            Your upcoming cinema experiences
+            Your upcoming movie experiences
           </p>
           <div id="bookingsList" class="grid gap-4"></div>
         </section>
@@ -369,123 +358,159 @@
       class="fixed top-4 right-4 z-[100] flex flex-col gap-2 transition-all"
     ></div>
 
-    <!-- Payment Modal -->
+    <!-- Payment Modal (Razorpay Style) -->
     <div
       id="paymentModal"
-      class="fixed inset-0 bg-inverse-surface/80 backdrop-blur-sm hidden items-center justify-center z-[70] p-4"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-[70] p-0 md:p-4"
     >
       <div
-        class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative overflow-hidden"
+        class="bg-white md:rounded-xl w-full h-full md:h-auto md:max-h-[90vh] max-w-[400px] shadow-2xl relative overflow-hidden flex flex-col animate-[slideUp_0.3s_ease-out]"
       >
         <div
           id="paymentLoading"
-          class="absolute inset-0 bg-surface-container-lowest/90 backdrop-blur-md z-10 hidden flex-col items-center justify-center"
+          class="absolute inset-0 bg-white/90 backdrop-blur-md z-[60] hidden flex-col items-center justify-center"
         >
           <div
-            class="w-12 h-12 border-4 border-outline-variant/30 border-t-primary rounded-full animate-spin mb-4"
+            class="w-12 h-12 border-4 border-gray-100 border-t-primary rounded-full animate-spin mb-4"
           ></div>
-          <p class="font-bold text-on-surface font-headline">
-            Processing Payment...
-          </p>
+          <p class="font-medium text-gray-700">Processing Payment...</p>
         </div>
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-headline font-bold text-on-surface">
-            Secure Checkout
-          </h2>
-          <button
-            onclick="closePaymentModal()"
-            class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors"
-          >
-            <span class="material-symbols-outlined text-on-surface-variant"
-              >close</span
-            >
-          </button>
-        </div>
-        <div
-          class="bg-surface-container-low border-2 border-outline-variant/20 rounded-xl p-4 mb-6 flex justify-between items-center"
-        >
-          <span class="text-on-surface-variant font-bold">Total Amount:</span>
-          <span
-            id="paymentTotalAmount"
-            class="text-2xl font-black text-primary font-headline"
-            >₹0</span
-          >
-        </div>
-        <form id="paymentForm" onsubmit="processPayment(event)">
-          <div class="mb-4">
-            <label class="block text-sm font-bold text-on-surface mb-2"
-              >Card Number</label
-            >
-            <div class="relative">
-              <span
-                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
-                >credit_card</span
+
+        <!-- Header -->
+        <div class="bg-primary px-6 py-5 flex items-center justify-between shrink-0 relative overflow-hidden">
+          <div class="relative z-10 flex flex-col gap-1 w-full">
+            <div class="flex justify-between items-start w-full">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-outlined text-primary" style="font-size: 24px;">movie</span>
+                </div>
+                <div class="text-white">
+                  <h2 class="font-bold text-lg leading-none tracking-wide">Tickverse</h2>
+                  <p class="text-white/80 text-xs mt-0.5" id="rzpOrderId">Order_#CP103</p>
+                </div>
+              </div>
+              <button
+                onclick="closePaymentModal()"
+                class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white/80 hover:text-white"
               >
-              <input
-                type="text"
-                required
-                pattern="[0-9]{16}"
-                maxlength="16"
-                class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
-                placeholder="0000 0000 0000 0000"
-                value="4111111111111111"
-              />
+                <span class="material-symbols-outlined text-[20px]">close</span>
+              </button>
+            </div>
+            
+            <div class="mt-6 flex flex-col">
+              <span class="text-white/80 text-sm font-medium mb-0.5">Amount to pay</span>
+              <span id="paymentTotalAmount" class="text-white text-3xl font-black tracking-tight">₹0</span>
             </div>
           </div>
-          <div class="flex gap-4 mb-6">
-            <div class="flex-1">
-              <label class="block text-sm font-bold text-on-surface mb-2"
-                >Expiry Date</label
-              >
-              <div class="relative">
-                <span
-                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
-                  >calendar_month</span
-                >
-                <input
-                  type="text"
-                  required
-                  placeholder="MM/YY"
-                  class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
-                  value="12/28"
-                />
-              </div>
-            </div>
-            <div class="flex-1">
-              <label class="block text-sm font-bold text-on-surface mb-2"
-                >CVV</label
-              >
-              <div class="relative">
-                <span
-                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
-                  >lock</span
-                >
-                <input
-                  type="password"
-                  required
-                  pattern="[0-9]{3,4}"
-                  maxlength="4"
-                  class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
-                  placeholder="123"
-                  value="123"
-                />
-              </div>
+          <!-- Graphic flair -->
+          <div class="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 blur-md"></div>
+          <div class="absolute right-0 bottom-0 w-24 h-24 bg-black/10 rounded-full translate-y-1/3 translate-x-1/3 blur-sm"></div>
+        </div>
+
+        <!-- Body -->
+        <div class="flex-1 bg-gray-50 flex flex-col overflow-y-auto">
+          <!-- User info strip -->
+          <div class="bg-white px-5 py-3 border-b border-gray-200 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm" id="rzpUserInitials">C</div>
+            <div class="flex flex-col">
+              <span class="text-gray-900 text-sm font-medium" id="rzpUserName">Customer</span>
+              <span class="text-gray-500 text-xs">+91 9876543210</span>
             </div>
           </div>
+
+          <div class="p-5 flex-1">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 ml-1">Payment Options</h3>
+            
+            <form id="paymentForm" onsubmit="processPayment(event)" class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm shadow-gray-200/50">
+              
+              <!-- Selected Option: Card -->
+              <div class="p-4 border-b border-gray-200 bg-blue-50/30">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
+                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">credit_card</span>
+                  </div>
+                  <span class="font-bold text-gray-800">Card</span>
+                </div>
+                
+                <div class="flex flex-col gap-3">
+                  <div class="relative">
+                    <input
+                      type="text"
+                      required
+                      pattern="[0-9]{16}"
+                      maxlength="16"
+                      class="w-full bg-white border border-gray-300 rounded text-sm px-3 py-2.5 text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors font-mono placeholder:text-gray-400 placeholder:font-sans"
+                      placeholder="Card Number"
+                      value="4111111111111111"
+                    />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MC" class="absolute right-3 top-1/2 -translate-y-1/2 h-4 opacity-50" />
+                  </div>
+                  
+                  <div class="flex gap-3">
+                    <div class="relative flex-1">
+                      <input
+                        type="text"
+                        required
+                        placeholder="MM/YY"
+                        class="w-full bg-white border border-gray-300 rounded text-sm px-3 py-2.5 text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors font-mono placeholder:text-gray-400 placeholder:font-sans"
+                        value="12/28"
+                      />
+                    </div>
+                    <div class="relative flex-1">
+                      <input
+                        type="password"
+                        required
+                        pattern="[0-9]{3,4}"
+                        maxlength="4"
+                        class="w-full bg-white border border-gray-300 rounded text-sm px-3 py-2.5 text-gray-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors font-mono placeholder:text-gray-400 placeholder:font-sans"
+                        placeholder="CVV"
+                        value="123"
+                      />
+                      <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-300" style="font-size: 16px;">info</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Other Mock Options -->
+              <div class="p-4 border-b border-gray-200 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
+                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">account_balance</span>
+                  </div>
+                  <span class="font-medium text-gray-700 text-sm">UPI / QR</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+              </div>
+              <div class="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
+                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">account_balance_wallet</span>
+                  </div>
+                  <span class="font-medium text-gray-700 text-sm">Netbanking</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+              </div>
+            </form>
+            
+            <div class="mt-6 flex justify-center items-center gap-1.5 opacity-50">
+              <span class="material-symbols-outlined text-[14px]">lock</span>
+              <span class="text-[10px] font-bold tracking-wider uppercase text-gray-600">Secured by TickPay</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Footer -->
+        <div class="bg-white border-t border-gray-200 p-4 shrink-0">
           <button
             type="submit"
-            class="w-full editorial-gradient text-on-primary py-3.5 rounded-xl font-bold font-headline text-base shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all"
+            form="paymentForm"
+            class="w-full bg-primary hover:bg-primary-container text-white py-3.5 rounded flex items-center justify-center gap-2 transition-colors focus:ring-4 focus:ring-primary/20"
           >
-            <span class="material-symbols-outlined text-xl">verified_user</span>
-            Authorize Payment
+            <span class="font-bold" id="rzpSubmitBtnDetails">Pay ₹0</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
-        </form>
-        <p
-          class="text-center text-xs text-on-surface-variant/60 mt-4 flex items-center justify-center gap-1"
-        >
-          <span class="material-symbols-outlined text-[14px]">encrypted</span>
-          Payments are securely encrypted
-        </p>
+        </div>
       </div>
     </div>
 
@@ -805,16 +830,16 @@
                       ? `<img src="${movie.poster_path}" alt="${movie.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />`
                       : `<div class="w-full h-full flex items-center justify-center bg-surface-container"><span class="material-symbols-outlined text-5xl text-on-surface-variant/30">movie</span></div>`
                   }
-                  ${
-                    movie.rating
-                      ? `
+                ${
+                  movie.rating
+                    ? `
                     <div class="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-black text-on-surface shadow-sm flex items-center gap-1">
                       <span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
-                      ${movie.rating.toFixed(1)}
+                      ${parseFloat(movie.rating).toFixed(1)}
                     </div>
                   `
-                      : ""
-                  }
+                    : ""
+                }
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                     <button class="w-full bg-primary text-on-primary py-2.5 rounded-xl font-bold text-sm shadow-lg">Book Tickets</button>
                   </div>
@@ -880,7 +905,7 @@
                     ? `
                   <span class="flex items-center gap-1">
                     <span class="material-symbols-outlined text-yellow-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="font-bold text-on-surface">${movie.rating.toFixed(1)}</span>
+                    <span class="font-bold text-on-surface">${parseFloat(movie.rating).toFixed(1)}</span>
                   </span>
                 `
                     : ""
@@ -1182,14 +1207,25 @@
         }
 
         const selectedSeatObjs = seats.filter((s) =>
-          selectedSeats.includes(s.id),
+          selectedSeats.includes(s.id)
         );
         const totalPrice = selectedSeatObjs.reduce(
           (sum, s) => sum + s.price,
-          0,
+          0
         );
         document.getElementById("paymentTotalAmount").textContent =
           `₹${totalPrice.toFixed(0)}`;
+          
+        if (document.getElementById("rzpOrderId")) {
+           document.getElementById("rzpOrderId").textContent = `Order_#CP${Math.floor(Math.random() * 100000)}`;
+        }
+        if (document.getElementById("rzpUserName")) {
+           document.getElementById("rzpUserName").textContent = currentUser.name || currentUser.email;
+           document.getElementById("rzpUserInitials").textContent = (currentUser.name || currentUser.email).charAt(0).toUpperCase();
+        }
+        if (document.getElementById("rzpSubmitBtnDetails")) {
+           document.getElementById("rzpSubmitBtnDetails").textContent = `Pay ₹${totalPrice.toFixed(0)}`;
+        }
 
         document.getElementById("paymentModal").classList.remove("hidden");
         document.getElementById("paymentModal").classList.add("flex");
@@ -1266,71 +1302,79 @@
         const { data } = await apiRequest("/api/bookings/my");
 
         if (data.bookings && data.bookings.length > 0) {
-          list.innerHTML = data.bookings
+          // Group bookings by showtime_id and booking_time (up to minutes) so a multi-seat checkout forms ONE ticket
+          const grouped = {};
+          data.bookings.forEach(b => {
+             const timeKey = new Date(b.booking_time).toISOString().slice(0, 16);
+             const key = `${b.showtime_id}_${timeKey}`;
+             if (!grouped[key]) {
+                grouped[key] = {
+                   ...b,
+                   seats: [{ id: b.booking_id, row: b.row_label, num: b.seat_number, s_id: b.seat_id }]
+                };
+             } else {
+                grouped[key].seats.push({ id: b.booking_id, row: b.row_label, num: b.seat_number, s_id: b.seat_id });
+             }
+          });
+          
+          const bookingGroups = Object.values(grouped).sort((a,b) => new Date(b.booking_time) - new Date(a.booking_time));
+
+          list.innerHTML = bookingGroups
             .map((b) => {
               const showTime = new Date(b.show_time);
-              const qrDataUrl = `cinepremiere_ticket:${b.booking_id}:${b.seat_id}`;
+              const groupIds = b.seats.map(s => s.id).join(',');
+              const qrDataUrl = `tickverse_ticket:${groupIds}`;
+              
+              const seatLabels = b.seats.map(s => `${s.row}${s.num}`).join(', ');
 
               return `
-              <div class="bg-surface-container-lowest rounded-2xl shadow-sm flex flex-col sm:flex-row items-stretch border border-outline-variant/20 overflow-hidden transform hover:scale-[1.01] transition-transform">
-                <div class="flex-grow p-5 sm:p-6 sm:ticket-dashed ticket-cutout-right relative bg-white">
-                  <div class="flex gap-4 items-start">
+              <div class="bg-surface-container-lowest rounded-2xl shadow-sm flex flex-col sm:flex-row items-stretch border border-outline-variant/20 overflow-hidden transform hover:scale-[1.01] transition-transform relative">
+                <div class="flex-grow p-4 sm:p-6 sm:ticket-dashed ticket-cutout-right relative bg-white min-w-0">
+                  <div class="flex gap-3 sm:gap-4 items-start">
                     ${
                       b.poster_path
                         ? `
-                      <div class="w-16 sm:w-20 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-md">
-                        <img src="${b.poster_path}" alt="${b.title}" class="w-full h-full object-cover" />
+                      <div class="w-16 h-24 sm:w-20 sm:h-[120px] rounded-lg overflow-hidden flex-shrink-0 shadow-md min-w-[64px] sm:min-w-[80px] bg-surface-container-low" style="flex: 0 0 auto;">
+                        <img src="${b.poster_path}" alt="${b.title}" class="w-full h-full object-cover shrink-0" style="display: block; width: 100%; height: 100%; min-width: 100%; min-height: 100%;" onerror="this.src='https://placehold.co/200x300?text=No+Image'; this.onerror=null;"/>
                       </div>
                     `
-                        : ""
+                        : `<div class="w-16 h-24 sm:w-20 sm:h-[120px] rounded-lg bg-surface-container-high flex flex-shrink-0 items-center justify-center min-w-[64px] sm:min-w-[80px]" style="flex: 0 0 auto;"><span class="material-symbols-outlined text-outline">movie</span></div>`
                     }
-                    <div class="flex-1">
+                    <div class="flex-1 min-w-0">
                       <div class="flex justify-between items-start mb-1">
-                        <h3 class="font-headline font-black text-lg md:text-xl text-on-surface leading-tight">${b.title}</h3>
-                        <span class="bg-surface-container text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Ticket</span>
+                        <h3 class="font-headline font-black text-base sm:text-lg md:text-xl text-on-surface leading-tight truncate pr-2">${b.title}</h3>
+                        <span class="bg-surface-container text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shrink-0 mt-0.5">Ticket</span>
                       </div>
-                      <div class="text-sm font-medium text-on-surface-variant flex flex-wrap gap-x-4 gap-y-1 mt-2">
-                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">event</span>${showTime.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}</p>
-                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">schedule</span>${showTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
-                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">theaters</span>Screen ${b.screen_number}</p>
+                      <div class="text-xs sm:text-sm font-medium text-on-surface-variant flex flex-wrap gap-x-3 gap-y-1 mt-2">
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary">event</span>${showTime.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}</p>
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary">schedule</span>${showTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary">theaters</span>Screen ${b.screen_number}</p>
                       </div>
-                      <div class="mt-4 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
-                        <div class="flex flex-col">
-                          <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Seat</span>
-                          <span class="font-headline font-black text-xl text-primary">${b.row_label}${b.seat_number}</span>
+                      <div class="mt-4 pt-3 border-t border-outline-variant/30 flex justify-between items-center">
+                        <div class="flex flex-col min-w-0 pr-2">
+                          <span class="text-[9px] sm:text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Seats (${b.seats.length})</span>
+                          <span class="font-headline font-black text-sm sm:text-xl text-primary truncate">${seatLabels}</span>
                         </div>
-                         <button onclick="cancelBooking(${b.booking_id})" class="text-sm font-bold text-error/80 hover:text-error hover:bg-error-container/50 px-3 py-1.5 rounded-lg transition-colors">
-                          Cancel
+                         <button onclick="cancelBookingGroup('${groupIds}')" class="text-xs sm:text-sm font-bold text-error/80 hover:text-error hover:bg-error-container/50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-colors shrink-0 whitespace-nowrap">
+                          Cancel Ticket
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <!-- Right Side QR Code -->
-                <div class="bg-surface-container-low sm:w-48 p-5 sm:p-6 flex flex-col items-center justify-center ticket-cutout-left relative">
-                  <div class="w-24 h-24 sm:w-28 sm:h-28 bg-white p-2 rounded-lg shadow-sm">
-                    <canvas id="qr-${b.booking_id}" class="w-full h-full" data-code="${qrDataUrl}"></canvas>
+                <div class="bg-surface-container-low sm:w-40 p-4 sm:p-6 flex flex-col items-center justify-center sm:ticket-cutout-left border-t border-dashed border-outline-variant/30 sm:border-t-0 relative shrink-0">
+                  <div class="w-16 h-16 sm:w-24 sm:h-24 bg-white p-1.5 rounded-lg shadow-sm flex items-center justify-center">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=96x96&data=${encodeURIComponent(qrDataUrl)}&color=b8083b" alt="QR" class="w-full h-full" />
                   </div>
-                  <span class="text-[10px] font-mono text-on-surface-variant/50 mt-3 font-bold tracking-widest">ID: #${b.booking_id.toString().padStart(6, "0")}</span>
+                  <span class="text-[9px] sm:text-[10px] font-mono text-on-surface-variant/50 mt-2 font-bold tracking-widest truncate w-full text-center">ID: #${b.booking_id.toString().padStart(6, "0")}</span>
                 </div>
               </div>
             `;
             })
             .join("");
 
-          // Render QR Codes after injecting HTML
-          setTimeout(() => {
-            data.bookings.forEach((b) => {
-              const canvas = document.getElementById(`qr-${b.booking_id}`);
-              if (canvas) {
-                QRCode.toCanvas(canvas, canvas.dataset.code, {
-                  width: 120,
-                  margin: 1,
-                  color: { dark: "#b8083b", light: "#ffffff" },
-                });
-              }
-            });
-          }, 100);
+
         } else {
           list.innerHTML = `
             <div class="bg-surface-container-lowest rounded-3xl p-12 text-center">
@@ -1345,17 +1389,23 @@
         }
       }
 
-      async function cancelBooking(bookingId) {
-        if (!confirm("Are you sure you want to cancel this ticket?")) return;
-        const { data } = await apiRequest(`/api/bookings/${bookingId}`, {
-          method: "DELETE",
-        });
-        if (data.success) {
-          showToast("Ticket cancelled successfully.", "success");
-          await loadMyBookings();
-        } else {
-          showToast(data.error || "Failed to cancel ticket", "error");
+      async function cancelBookingGroup(groupIds) {
+        if (!confirm("Are you sure you want to cancel this entire ticket?")) return;
+        const ids = groupIds.split(',');
+        
+        let hasError = false;
+        // Process sequentially or Promise.all - let's do sequential for simplicity
+        for (const id of ids) {
+            const { data } = await apiRequest(`/api/bookings/${id}`, { method: "DELETE" });
+            if (!data.success) hasError = true;
         }
+        
+        if (!hasError) {
+          showToast("Ticket cancelled successfully.", "success");
+        } else {
+          showToast("Failed to fully cancel ticket.", "error");
+        }
+        await loadMyBookings();
       }
 
       checkAuth().then(() => showSection("movies"));

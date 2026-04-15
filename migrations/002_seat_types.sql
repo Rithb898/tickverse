@@ -22,25 +22,25 @@ ALTER TABLE seats ADD COLUMN IF NOT EXISTS seat_type_id INTEGER REFERENCES seat_
 ALTER TABLE seats ADD COLUMN IF NOT EXISTS row_label VARCHAR(1);
 ALTER TABLE seats ADD COLUMN IF NOT EXISTS seat_number INTEGER;
 
--- Clear existing seats and insert new ones
--- 80 seats: 8 rows (A-H), 10 seats per row
--- Rows A-E: Normal (front)
--- Rows F-G: Deluxe (middle)
--- Row H: Recliner (back)
-DELETE FROM bookings;
-DELETE FROM seats;
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM seats WHERE row_label IS NOT NULL) THEN
+        DELETE FROM bookings;
+        DELETE FROM seats;
 
-INSERT INTO seats (row_label, seat_number, seat_type_id)
-SELECT 
-    CHR(65 + row_num) as row_label,
-    seat_num as seat_number,
-    CASE 
-        WHEN row_num = 7 THEN 3  -- Row H: Recliner (last row)
-        WHEN row_num IN (5, 6) THEN 2  -- Rows F-G: Deluxe
-        ELSE 1                    -- Rows A-E: Normal
-    END as seat_type_id
-FROM generate_series(0, 7) as row_num
-CROSS JOIN generate_series(1, 10) as seat_num;
+        INSERT INTO seats (row_label, seat_number, seat_type_id)
+        SELECT 
+            CHR(65 + row_num) as row_label,
+            seat_num as seat_number,
+            CASE 
+                WHEN row_num = 7 THEN 3  -- Row H: Recliner (last row)
+                WHEN row_num IN (5, 6) THEN 2  -- Rows F-G: Deluxe
+                ELSE 1                    -- Rows A-E: Normal
+            END as seat_type_id
+        FROM generate_series(0, 7) as row_num
+        CROSS JOIN generate_series(1, 10) as seat_num;
+    END IF;
+END $$;
 
 -- Create index for seat queries
 CREATE INDEX IF NOT EXISTS idx_seats_type ON seats(seat_type_id);

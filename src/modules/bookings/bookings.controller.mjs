@@ -32,10 +32,12 @@ export const createBooking = async (req, res) => {
         }
       }
 
+      const bookingTime = new Date();
+      
       for (const seatId of seatIds) {
         await conn.query(
-          "INSERT INTO bookings (user_id, seat_id, showtime_id) VALUES ($1, $2, $3)",
-          [userId, seatId, showtimeId],
+          "INSERT INTO bookings (user_id, seat_id, showtime_id, booking_time) VALUES ($1, $2, $3, $4)",
+          [userId, seatId, showtimeId, bookingTime],
         );
       }
 
