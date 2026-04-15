@@ -28,7 +28,7 @@ A movie ticket booking platform with user authentication and protected booking f
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Rithb898/tickverse.git
    cd tickverse
    ```
 
