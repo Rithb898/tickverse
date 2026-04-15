@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tickverse - Book Your Experience</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap"
@@ -200,7 +200,6 @@
                 Select a movie to begin your experience
               </p>
             </div>
-
           </div>
           <div
             id="moviesGrid"
@@ -377,16 +376,28 @@
         </div>
 
         <!-- Header -->
-        <div class="bg-primary px-6 py-5 flex items-center justify-between shrink-0 relative overflow-hidden">
+        <div
+          class="bg-primary px-6 py-5 flex items-center justify-between shrink-0 relative overflow-hidden"
+        >
           <div class="relative z-10 flex flex-col gap-1 w-full">
             <div class="flex justify-between items-start w-full">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm">
-                  <span class="material-symbols-outlined text-primary" style="font-size: 24px;">movie</span>
+                <div
+                  class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary"
+                    style="font-size: 24px"
+                    >movie</span
+                  >
                 </div>
                 <div class="text-white">
-                  <h2 class="font-bold text-lg leading-none tracking-wide">Tickverse</h2>
-                  <p class="text-white/80 text-xs mt-0.5" id="rzpOrderId">Order_#CP103</p>
+                  <h2 class="font-bold text-lg leading-none tracking-wide">
+                    Tickverse
+                  </h2>
+                  <p class="text-white/80 text-xs mt-0.5" id="rzpOrderId">
+                    Order_#CP103
+                  </p>
                 </div>
               </div>
               <button
@@ -396,42 +407,74 @@
                 <span class="material-symbols-outlined text-[20px]">close</span>
               </button>
             </div>
-            
+
             <div class="mt-6 flex flex-col">
-              <span class="text-white/80 text-sm font-medium mb-0.5">Amount to pay</span>
-              <span id="paymentTotalAmount" class="text-white text-3xl font-black tracking-tight">₹0</span>
+              <span class="text-white/80 text-sm font-medium mb-0.5"
+                >Amount to pay</span
+              >
+              <span
+                id="paymentTotalAmount"
+                class="text-white text-3xl font-black tracking-tight"
+                >₹0</span
+              >
             </div>
           </div>
           <!-- Graphic flair -->
-          <div class="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 blur-md"></div>
-          <div class="absolute right-0 bottom-0 w-24 h-24 bg-black/10 rounded-full translate-y-1/3 translate-x-1/3 blur-sm"></div>
+          <div
+            class="absolute right-0 top-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 blur-md"
+          ></div>
+          <div
+            class="absolute right-0 bottom-0 w-24 h-24 bg-black/10 rounded-full translate-y-1/3 translate-x-1/3 blur-sm"
+          ></div>
         </div>
 
         <!-- Body -->
         <div class="flex-1 bg-gray-50 flex flex-col overflow-y-auto">
           <!-- User info strip -->
-          <div class="bg-white px-5 py-3 border-b border-gray-200 flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm" id="rzpUserInitials">C</div>
+          <div
+            class="bg-white px-5 py-3 border-b border-gray-200 flex items-center gap-3"
+          >
+            <div
+              class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm"
+              id="rzpUserInitials"
+            >
+              C
+            </div>
             <div class="flex flex-col">
-              <span class="text-gray-900 text-sm font-medium" id="rzpUserName">Customer</span>
+              <span class="text-gray-900 text-sm font-medium" id="rzpUserName"
+                >Customer</span
+              >
               <span class="text-gray-500 text-xs">+91 9876543210</span>
             </div>
           </div>
 
           <div class="p-5 flex-1">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 ml-1">Payment Options</h3>
-            
-            <form id="paymentForm" onsubmit="processPayment(event)" class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm shadow-gray-200/50">
-              
+            <h3
+              class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 ml-1"
+            >
+              Payment Options
+            </h3>
+
+            <form
+              id="paymentForm"
+              onsubmit="processPayment(event)"
+              class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm shadow-gray-200/50"
+            >
               <!-- Selected Option: Card -->
               <div class="p-4 border-b border-gray-200 bg-blue-50/30">
                 <div class="flex items-center gap-3 mb-4">
-                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
-                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">credit_card</span>
+                  <div
+                    class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200"
+                  >
+                    <span
+                      class="material-symbols-outlined text-gray-600"
+                      style="font-size: 18px"
+                      >credit_card</span
+                    >
                   </div>
                   <span class="font-bold text-gray-800">Card</span>
                 </div>
-                
+
                 <div class="flex flex-col gap-3">
                   <div class="relative">
                     <input
@@ -443,9 +486,13 @@
                       placeholder="Card Number"
                       value="4111111111111111"
                     />
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MC" class="absolute right-3 top-1/2 -translate-y-1/2 h-4 opacity-50" />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                      alt="MC"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 h-4 opacity-50"
+                    />
                   </div>
-                  
+
                   <div class="flex gap-3">
                     <div class="relative flex-1">
                       <input
@@ -466,36 +513,69 @@
                         placeholder="CVV"
                         value="123"
                       />
-                      <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-300" style="font-size: 16px;">info</span>
+                      <span
+                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-300"
+                        style="font-size: 16px"
+                        >info</span
+                      >
                     </div>
                   </div>
                 </div>
               </div>
 
               <!-- Other Mock Options -->
-              <div class="p-4 border-b border-gray-200 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+              <div
+                class="p-4 border-b border-gray-200 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors"
+              >
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
-                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">account_balance</span>
+                  <div
+                    class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200"
+                  >
+                    <span
+                      class="material-symbols-outlined text-gray-600"
+                      style="font-size: 18px"
+                      >account_balance</span
+                    >
                   </div>
-                  <span class="font-medium text-gray-700 text-sm">UPI / QR</span>
+                  <span class="font-medium text-gray-700 text-sm"
+                    >UPI / QR</span
+                  >
                 </div>
-                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                <span class="material-symbols-outlined text-gray-400"
+                  >chevron_right</span
+                >
               </div>
-              <div class="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+              <div
+                class="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors"
+              >
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200">
-                    <span class="material-symbols-outlined text-gray-600" style="font-size: 18px;">account_balance_wallet</span>
+                  <div
+                    class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center border border-gray-200"
+                  >
+                    <span
+                      class="material-symbols-outlined text-gray-600"
+                      style="font-size: 18px"
+                      >account_balance_wallet</span
+                    >
                   </div>
-                  <span class="font-medium text-gray-700 text-sm">Netbanking</span>
+                  <span class="font-medium text-gray-700 text-sm"
+                    >Netbanking</span
+                  >
                 </div>
-                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                <span class="material-symbols-outlined text-gray-400"
+                  >chevron_right</span
+                >
               </div>
             </form>
-            
-            <div class="mt-6 flex justify-center items-center gap-1.5 opacity-50">
+
+            <div
+              class="mt-6 flex justify-center items-center gap-1.5 opacity-50"
+            >
               <span class="material-symbols-outlined text-[14px]">lock</span>
-              <span class="text-[10px] font-bold tracking-wider uppercase text-gray-600">Secured by TickPay</span>
+              <span
+                class="text-[10px] font-bold tracking-wider uppercase text-gray-600"
+                >Secured by TickPay</span
+              >
             </div>
           </div>
         </div>
@@ -1207,24 +1287,31 @@
         }
 
         const selectedSeatObjs = seats.filter((s) =>
-          selectedSeats.includes(s.id)
+          selectedSeats.includes(s.id),
         );
         const totalPrice = selectedSeatObjs.reduce(
           (sum, s) => sum + s.price,
-          0
+          0,
         );
         document.getElementById("paymentTotalAmount").textContent =
           `₹${totalPrice.toFixed(0)}`;
-          
+
         if (document.getElementById("rzpOrderId")) {
-           document.getElementById("rzpOrderId").textContent = `Order_#CP${Math.floor(Math.random() * 100000)}`;
+          document.getElementById("rzpOrderId").textContent =
+            `Order_#CP${Math.floor(Math.random() * 100000)}`;
         }
         if (document.getElementById("rzpUserName")) {
-           document.getElementById("rzpUserName").textContent = currentUser.name || currentUser.email;
-           document.getElementById("rzpUserInitials").textContent = (currentUser.name || currentUser.email).charAt(0).toUpperCase();
+          document.getElementById("rzpUserName").textContent =
+            currentUser.name || currentUser.email;
+          document.getElementById("rzpUserInitials").textContent = (
+            currentUser.name || currentUser.email
+          )
+            .charAt(0)
+            .toUpperCase();
         }
         if (document.getElementById("rzpSubmitBtnDetails")) {
-           document.getElementById("rzpSubmitBtnDetails").textContent = `Pay ₹${totalPrice.toFixed(0)}`;
+          document.getElementById("rzpSubmitBtnDetails").textContent =
+            `Pay ₹${totalPrice.toFixed(0)}`;
         }
 
         document.getElementById("paymentModal").classList.remove("hidden");
@@ -1304,28 +1391,44 @@
         if (data.bookings && data.bookings.length > 0) {
           // Group bookings by showtime_id and booking_time (up to minutes) so a multi-seat checkout forms ONE ticket
           const grouped = {};
-          data.bookings.forEach(b => {
-             const timeKey = new Date(b.booking_time).toISOString().slice(0, 16);
-             const key = `${b.showtime_id}_${timeKey}`;
-             if (!grouped[key]) {
-                grouped[key] = {
-                   ...b,
-                   seats: [{ id: b.booking_id, row: b.row_label, num: b.seat_number, s_id: b.seat_id }]
-                };
-             } else {
-                grouped[key].seats.push({ id: b.booking_id, row: b.row_label, num: b.seat_number, s_id: b.seat_id });
-             }
+          data.bookings.forEach((b) => {
+            const timeKey = new Date(b.booking_time).toISOString().slice(0, 16);
+            const key = `${b.showtime_id}_${timeKey}`;
+            if (!grouped[key]) {
+              grouped[key] = {
+                ...b,
+                seats: [
+                  {
+                    id: b.booking_id,
+                    row: b.row_label,
+                    num: b.seat_number,
+                    s_id: b.seat_id,
+                  },
+                ],
+              };
+            } else {
+              grouped[key].seats.push({
+                id: b.booking_id,
+                row: b.row_label,
+                num: b.seat_number,
+                s_id: b.seat_id,
+              });
+            }
           });
-          
-          const bookingGroups = Object.values(grouped).sort((a,b) => new Date(b.booking_time) - new Date(a.booking_time));
+
+          const bookingGroups = Object.values(grouped).sort(
+            (a, b) => new Date(b.booking_time) - new Date(a.booking_time),
+          );
 
           list.innerHTML = bookingGroups
             .map((b) => {
               const showTime = new Date(b.show_time);
-              const groupIds = b.seats.map(s => s.id).join(',');
+              const groupIds = b.seats.map((s) => s.id).join(",");
               const qrDataUrl = `tickverse_ticket:${groupIds}`;
-              
-              const seatLabels = b.seats.map(s => `${s.row}${s.num}`).join(', ');
+
+              const seatLabels = b.seats
+                .map((s) => `${s.row}${s.num}`)
+                .join(", ");
 
               return `
               <div class="bg-surface-container-lowest rounded-2xl shadow-sm flex flex-col sm:flex-row items-stretch border border-outline-variant/20 overflow-hidden transform hover:scale-[1.01] transition-transform relative">
@@ -1373,8 +1476,6 @@
             `;
             })
             .join("");
-
-
         } else {
           list.innerHTML = `
             <div class="bg-surface-container-lowest rounded-3xl p-12 text-center">
@@ -1390,16 +1491,19 @@
       }
 
       async function cancelBookingGroup(groupIds) {
-        if (!confirm("Are you sure you want to cancel this entire ticket?")) return;
-        const ids = groupIds.split(',');
-        
+        if (!confirm("Are you sure you want to cancel this entire ticket?"))
+          return;
+        const ids = groupIds.split(",");
+
         let hasError = false;
         // Process sequentially or Promise.all - let's do sequential for simplicity
         for (const id of ids) {
-            const { data } = await apiRequest(`/api/bookings/${id}`, { method: "DELETE" });
-            if (!data.success) hasError = true;
+          const { data } = await apiRequest(`/api/bookings/${id}`, {
+            method: "DELETE",
+          });
+          if (!data.success) hasError = true;
         }
-        
+
         if (!hasError) {
           showToast("Ticket cancelled successfully.", "success");
         } else {
