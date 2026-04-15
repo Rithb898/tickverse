@@ -1,12 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CinePremiere - Book Your Experience</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -16,29 +24,29 @@
               "primary-fixed-dim": "#ffb2b8",
               "on-surface": "#181b29",
               "secondary-container": "#ff8793",
-              "background": "#fbf8ff",
+              background: "#fbf8ff",
               "inverse-surface": "#2d2f3f",
               "outline-variant": "#e3bdbf",
               "surface-container-lowest": "#ffffff",
-              "outline": "#8f6f71",
+              outline: "#8f6f71",
               "error-container": "#ffdad6",
               "on-tertiary-fixed": "#002110",
               "tertiary-fixed": "#7ffab3",
               "secondary-fixed": "#ffdadb",
               "inverse-on-surface": "#f0efff",
-              "error": "#ba1a1a",
+              error: "#ba1a1a",
               "on-secondary-fixed-variant": "#812534",
               "surface-container-high": "#e6e6fc",
               "surface-variant": "#e1e1f6",
               "surface-tint": "#bb0e3d",
               "on-tertiary-fixed-variant": "#00522f",
-              "tertiary": "#006a3e",
+              tertiary: "#006a3e",
               "surface-container-low": "#f4f2ff",
               "surface-container": "#edecff",
               "surface-dim": "#d8d8ed",
               "on-primary": "#ffffff",
-              "primary": "#b8083b",
-              "surface": "#fbf8ff",
+              primary: "#b8083b",
+              surface: "#fbf8ff",
               "surface-bright": "#fbf8ff",
               "on-secondary": "#ffffff",
               "on-tertiary": "#ffffff",
@@ -49,7 +57,7 @@
               "on-background": "#181b29",
               "inverse-primary": "#ffb2b8",
               "on-secondary-fixed": "#40000e",
-              "secondary": "#a03d4a",
+              secondary: "#a03d4a",
               "on-primary-container": "#fffbff",
               "on-tertiary-container": "#f6fff5",
               "tertiary-container": "#008650",
@@ -59,7 +67,7 @@
               "surface-container-highest": "#e1e1f6",
               "primary-fixed": "#ffdadb",
               "on-error": "#ffffff",
-              "primary-container": "#db2d51"
+              "primary-container": "#db2d51",
             },
             borderRadius: {
               DEFAULT: "0.25rem",
@@ -67,20 +75,24 @@
               xl: "0.75rem",
               "2xl": "1rem",
               "3xl": "1.5rem",
-              full: "9999px"
+              full: "9999px",
             },
             fontFamily: {
               headline: ["Plus Jakarta Sans", "sans-serif"],
               body: ["Inter", "sans-serif"],
-              label: ["Inter", "sans-serif"]
-            }
-          }
-        }
-      }
+              label: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
       }
       .editorial-gradient {
         background: linear-gradient(135deg, #b8083b 0%, #db2d51 100%);
@@ -95,21 +107,76 @@
         transform: rotateX(-30deg);
         box-shadow: 0 20px 40px -10px rgba(184, 8, 59, 0.2);
       }
-      .hide-scrollbar::-webkit-scrollbar { display: none; }
-      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
       .seat-transition {
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          #f4f2ff 25%,
+          #edecff 50%,
+          #f4f2ff 75%
+        );
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+      .ticket-dashed {
+        border-right: 2px dashed #e3bdbf;
+      }
+      .ticket-cutout-left {
+        mask-image: radial-gradient(
+          circle at 0 50%,
+          transparent 12px,
+          black 13px
+        );
+      }
+      .ticket-cutout-right {
+        mask-image: radial-gradient(
+          circle at 100% 50%,
+          transparent 12px,
+          black 13px
+        );
+      }
     </style>
   </head>
-  <body class="bg-surface font-body text-on-surface selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+  <body
+    class="bg-surface font-body text-on-surface selection:bg-primary-fixed-dim selection:text-on-primary-fixed"
+  >
     <div id="app">
       <!-- Navigation -->
-      <nav id="mainNav" class="bg-white/70 backdrop-blur-xl sticky top-0 z-50 shadow-[0_24px_24px_-4px_rgba(0,0,0,0.06)]">
-        <div class="max-w-screen-2xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+      <nav
+        id="mainNav"
+        class="bg-white/70 backdrop-blur-xl sticky top-0 z-50 shadow-[0_24px_24px_-4px_rgba(0,0,0,0.06)]"
+      >
+        <div
+          class="max-w-screen-2xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center"
+        >
           <div class="flex items-center gap-6 md:gap-12">
-            <h1 onclick="goHome()" class="text-xl md:text-2xl font-black text-primary italic font-headline cursor-pointer tracking-tight">CinePremiere</h1>
-            <div id="navBreadcrumb" class="hidden text-sm text-on-surface-variant font-medium"></div>
+            <h1
+              onclick="goHome()"
+              class="text-xl md:text-2xl font-black text-primary italic font-headline cursor-pointer tracking-tight"
+            >
+              CinePremiere
+            </h1>
+            <div
+              id="navBreadcrumb"
+              class="hidden text-sm text-on-surface-variant font-medium"
+            ></div>
           </div>
           <div id="authButtons" class="flex gap-3 items-center"></div>
         </div>
@@ -117,29 +184,60 @@
 
       <!-- Movie Selection View -->
       <div id="movieSelection">
-        <section class="max-w-screen-2xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24">
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 md:mb-12">
+        <section
+          class="max-w-screen-2xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24"
+        >
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 md:mb-12"
+          >
             <div>
-              <h2 class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight">Now Showing</h2>
-              <p class="text-on-surface-variant font-medium mt-1">Select a movie to begin your experience</p>
+              <h2
+                class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight"
+              >
+                Now Showing
+              </h2>
+              <p class="text-on-surface-variant font-medium mt-1">
+                Select a movie to begin your experience
+              </p>
             </div>
             <div class="flex flex-wrap items-center gap-3">
-              <button class="px-5 py-2.5 bg-primary text-on-primary rounded-full font-bold text-sm shadow-md shadow-primary/20">All</button>
-              <button class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest rounded-full font-bold text-sm transition-colors">Coming Soon</button>
+              <button
+                class="px-5 py-2.5 bg-primary text-on-primary rounded-full font-bold text-sm shadow-md shadow-primary/20"
+              >
+                All
+              </button>
+              <button
+                class="px-5 py-2.5 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest rounded-full font-bold text-sm transition-colors"
+              >
+                Coming Soon
+              </button>
             </div>
           </div>
-          <div id="moviesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8"></div>
+          <div
+            id="moviesGrid"
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8"
+          ></div>
         </section>
       </div>
 
       <!-- Showtime Selection View -->
       <div id="showtimeSelection" class="hidden">
         <section class="relative">
-          <div id="movieHero" class="relative h-[320px] md:h-[420px] flex flex-col justify-end overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-surface/40"></div>
+          <div
+            id="movieHero"
+            class="relative h-[320px] md:h-[420px] flex flex-col justify-end overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-surface via-surface/80 to-surface/40"
+            ></div>
           </div>
-          <div class="max-w-screen-2xl mx-auto px-4 md:px-6 -mt-24 relative z-10 pb-24">
-            <div id="movieDetailsCard" class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-xl mb-8"></div>
+          <div
+            class="max-w-screen-2xl mx-auto px-4 md:px-6 -mt-24 relative z-10 pb-24"
+          >
+            <div
+              id="movieDetailsCard"
+              class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-xl mb-8"
+            ></div>
             <div id="cinemasList" class="space-y-6"></div>
           </div>
         </section>
@@ -147,95 +245,327 @@
 
       <!-- Seat Selection View -->
       <div id="seatSelection" class="hidden">
-        <section class="max-w-screen-xl mx-auto px-4 md:px-6 pt-6 md:pt-8 pb-40">
-          <div id="showtimeHeader" class="bg-surface-container-low rounded-2xl p-5 md:p-6 mb-8"></div>
+        <section
+          class="max-w-screen-xl mx-auto px-4 md:px-6 pt-6 md:pt-8 pb-40"
+        >
+          <div
+            id="showtimeHeader"
+            class="bg-surface-container-low rounded-2xl p-5 md:p-6 mb-8"
+          ></div>
           <div class="flex justify-center mb-6">
-            <div class="bg-surface-container-low rounded-full px-6 py-3 flex flex-wrap justify-center gap-4 md:gap-8 items-center">
+            <div
+              class="bg-surface-container-low rounded-full px-6 py-3 flex flex-wrap justify-center gap-4 md:gap-8 items-center"
+            >
               <div class="flex items-center gap-2">
-                <div class="w-5 h-5 rounded-lg bg-surface-container-high border border-outline-variant/30"></div>
-                <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Available</span>
+                <div
+                  class="w-5 h-5 rounded-lg bg-surface-container-high border border-outline-variant/30"
+                ></div>
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                  >Available</span
+                >
               </div>
               <div class="w-px h-5 bg-outline-variant/30 hidden md:block"></div>
               <div class="flex items-center gap-2">
-                <div class="w-5 h-5 rounded-lg bg-primary shadow-lg shadow-primary/30"></div>
-                <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Selected</span>
+                <div
+                  class="w-5 h-5 rounded-lg bg-primary shadow-lg shadow-primary/30"
+                ></div>
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                  >Selected</span
+                >
               </div>
               <div class="w-px h-5 bg-outline-variant/30 hidden md:block"></div>
               <div class="flex items-center gap-2">
-                <div class="w-5 h-5 rounded-lg bg-inverse-surface/20 flex items-center justify-center">
-                  <span class="material-symbols-outlined text-[12px] text-on-surface-variant/40">close</span>
+                <div
+                  class="w-5 h-5 rounded-lg bg-inverse-surface/20 flex items-center justify-center"
+                >
+                  <span
+                    class="material-symbols-outlined text-[12px] text-on-surface-variant/40"
+                    >close</span
+                  >
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Booked</span>
+                <span
+                  class="text-xs font-bold uppercase tracking-wider text-on-surface-variant"
+                  >Booked</span
+                >
               </div>
             </div>
           </div>
           <div class="flex justify-center mb-8">
             <div class="perspective-screen">
-              <div class="h-12 w-[280px] md:w-[400px] bg-gradient-to-b from-surface-container-high to-transparent screen-curve rounded-t-[50%] border-t-2 border-primary-fixed-dim/30 flex items-center justify-center">
-                <span class="text-on-surface-variant font-label text-[10px] font-bold tracking-[0.3em] uppercase opacity-60">Screen</span>
+              <div
+                class="h-12 w-[280px] md:w-[400px] bg-gradient-to-b from-surface-container-high to-transparent screen-curve rounded-t-[50%] border-t-2 border-primary-fixed-dim/30 flex items-center justify-center"
+              >
+                <span
+                  class="text-on-surface-variant font-label text-[10px] font-bold tracking-[0.3em] uppercase opacity-60"
+                  >Screen</span
+                >
               </div>
             </div>
           </div>
-          <div id="seatMap" class="flex justify-center overflow-x-auto hide-scrollbar pb-4"></div>
+          <div
+            id="seatMap"
+            class="flex justify-center overflow-x-auto hide-scrollbar pb-4"
+          ></div>
         </section>
       </div>
 
       <!-- My Bookings View -->
       <div id="myBookingsSection" class="hidden">
-        <section class="max-w-screen-xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24">
-          <h2 class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2">My Bookings</h2>
-          <p class="text-on-surface-variant font-medium mb-8">Your upcoming cinema experiences</p>
+        <section
+          class="max-w-screen-xl mx-auto px-4 md:px-6 pt-8 md:pt-12 pb-24"
+        >
+          <h2
+            class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2"
+          >
+            My Bookings
+          </h2>
+          <p class="text-on-surface-variant font-medium mb-8">
+            Your upcoming cinema experiences
+          </p>
           <div id="bookingsList" class="grid gap-4"></div>
         </section>
       </div>
 
       <!-- Floating Checkout Bar -->
-      <div id="checkoutBar" class="fixed bottom-0 left-0 w-full z-50 px-4 md:px-6 pb-6 pt-4 bg-white/80 backdrop-blur-2xl shadow-[0_-8px_24px_rgba(0,0,0,0.1)] rounded-t-3xl transform translate-y-full transition-transform duration-300">
-        <div class="max-w-screen-xl mx-auto flex items-center justify-between gap-4">
+      <div
+        id="checkoutBar"
+        class="fixed bottom-0 left-0 w-full z-50 px-4 md:px-6 pb-6 pt-4 bg-white/80 backdrop-blur-2xl shadow-[0_-8px_24px_rgba(0,0,0,0.1)] rounded-t-3xl transform translate-y-full transition-transform duration-300"
+      >
+        <div
+          class="max-w-screen-xl mx-auto flex items-center justify-between gap-4"
+        >
           <div class="flex-1 min-w-0">
             <div class="flex items-baseline gap-2">
-              <span id="checkoutTotal" class="text-2xl md:text-3xl font-black font-headline text-on-surface">$0.00</span>
-              <span class="text-xs font-bold text-on-surface-variant tracking-wider uppercase opacity-60">Total</span>
+              <span
+                id="checkoutTotal"
+                class="text-2xl md:text-3xl font-black font-headline text-on-surface"
+                >$0.00</span
+              >
+              <span
+                class="text-xs font-bold text-on-surface-variant tracking-wider uppercase opacity-60"
+                >Total</span
+              >
             </div>
             <div id="checkoutSeats" class="flex flex-wrap gap-1.5 mt-1.5"></div>
           </div>
-          <button onclick="confirmBooking()" class="flex-shrink-0 editorial-gradient text-on-primary px-6 md:px-10 py-3.5 md:py-4 rounded-xl font-bold font-headline text-sm md:text-base flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-transform">
-            <span>Confirm Booking</span>
-            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+          <button
+            onclick="showPaymentModal()"
+            class="flex-shrink-0 editorial-gradient text-on-primary px-6 md:px-10 py-3.5 md:py-4 rounded-xl font-bold font-headline text-sm md:text-base flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] hover:shadow-primary/40 active:scale-95 transition-all"
+          >
+            <span>Proceed to Pay</span>
+            <span class="material-symbols-outlined text-xl font-bold"
+              >payments</span
+            >
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="fixed inset-0 bg-inverse-surface/80 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
-      <div class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl">
+    <!-- Toast Container -->
+    <div
+      id="toastContainer"
+      class="fixed top-4 right-4 z-[100] flex flex-col gap-2 transition-all"
+    ></div>
+
+    <!-- Payment Modal -->
+    <div
+      id="paymentModal"
+      class="fixed inset-0 bg-inverse-surface/80 backdrop-blur-sm hidden items-center justify-center z-[70] p-4"
+    >
+      <div
+        class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative overflow-hidden"
+      >
+        <div
+          id="paymentLoading"
+          class="absolute inset-0 bg-surface-container-lowest/90 backdrop-blur-md z-10 hidden flex-col items-center justify-center"
+        >
+          <div
+            class="w-12 h-12 border-4 border-outline-variant/30 border-t-primary rounded-full animate-spin mb-4"
+          ></div>
+          <p class="font-bold text-on-surface font-headline">
+            Processing Payment...
+          </p>
+        </div>
         <div class="flex justify-between items-center mb-6">
-          <h2 id="authModalTitle" class="text-2xl font-headline font-bold text-on-surface">Login</h2>
-          <button onclick="closeAuthModal()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
-            <span class="material-symbols-outlined text-on-surface-variant">close</span>
+          <h2 class="text-2xl font-headline font-bold text-on-surface">
+            Secure Checkout
+          </h2>
+          <button
+            onclick="closePaymentModal()"
+            class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors"
+          >
+            <span class="material-symbols-outlined text-on-surface-variant"
+              >close</span
+            >
+          </button>
+        </div>
+        <div
+          class="bg-surface-container-low border-2 border-outline-variant/20 rounded-xl p-4 mb-6 flex justify-between items-center"
+        >
+          <span class="text-on-surface-variant font-bold">Total Amount:</span>
+          <span
+            id="paymentTotalAmount"
+            class="text-2xl font-black text-primary font-headline"
+            >₹0</span
+          >
+        </div>
+        <form id="paymentForm" onsubmit="processPayment(event)">
+          <div class="mb-4">
+            <label class="block text-sm font-bold text-on-surface mb-2"
+              >Card Number</label
+            >
+            <div class="relative">
+              <span
+                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
+                >credit_card</span
+              >
+              <input
+                type="text"
+                required
+                pattern="[0-9]{16}"
+                maxlength="16"
+                class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
+                placeholder="0000 0000 0000 0000"
+                value="4111111111111111"
+              />
+            </div>
+          </div>
+          <div class="flex gap-4 mb-6">
+            <div class="flex-1">
+              <label class="block text-sm font-bold text-on-surface mb-2"
+                >Expiry Date</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
+                  >calendar_month</span
+                >
+                <input
+                  type="text"
+                  required
+                  placeholder="MM/YY"
+                  class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
+                  value="12/28"
+                />
+              </div>
+            </div>
+            <div class="flex-1">
+              <label class="block text-sm font-bold text-on-surface mb-2"
+                >CVV</label
+              >
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50"
+                  >lock</span
+                >
+                <input
+                  type="password"
+                  required
+                  pattern="[0-9]{3,4}"
+                  maxlength="4"
+                  class="w-full bg-surface-container border-2 border-outline-variant/50 hover:border-primary/50 rounded-xl pl-12 pr-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-mono tracking-widest placeholder:text-on-surface-variant/30"
+                  placeholder="123"
+                  value="123"
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="w-full editorial-gradient text-on-primary py-3.5 rounded-xl font-bold font-headline text-base shadow-lg shadow-primary/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all"
+          >
+            <span class="material-symbols-outlined text-xl">verified_user</span>
+            Authorize Payment
+          </button>
+        </form>
+        <p
+          class="text-center text-xs text-on-surface-variant/60 mt-4 flex items-center justify-center gap-1"
+        >
+          <span class="material-symbols-outlined text-[14px]">encrypted</span>
+          Payments are securely encrypted
+        </p>
+      </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div
+      id="authModal"
+      class="fixed inset-0 bg-inverse-surface/80 backdrop-blur-sm hidden items-center justify-center z-[60] p-4"
+    >
+      <div
+        class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2
+            id="authModalTitle"
+            class="text-2xl font-headline font-bold text-on-surface"
+          >
+            Login
+          </h2>
+          <button
+            onclick="closeAuthModal()"
+            class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors"
+          >
+            <span class="material-symbols-outlined text-on-surface-variant"
+              >close</span
+            >
           </button>
         </div>
         <form id="authForm" onsubmit="handleAuth(event)">
           <div id="nameField" class="hidden mb-4">
-            <label class="block text-sm font-bold text-on-surface mb-2">Name</label>
-            <input type="text" name="name" class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50" placeholder="Your name" />
+            <label class="block text-sm font-bold text-on-surface mb-2"
+              >Name</label
+            >
+            <input
+              type="text"
+              name="name"
+              class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50"
+              placeholder="Your name"
+            />
           </div>
           <div class="mb-4">
-            <label class="block text-sm font-bold text-on-surface mb-2">Email</label>
-            <input type="email" name="email" required class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50" placeholder="you@example.com" />
+            <label class="block text-sm font-bold text-on-surface mb-2"
+              >Email</label
+            >
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50"
+              placeholder="you@example.com"
+            />
           </div>
           <div class="mb-6">
-            <label class="block text-sm font-bold text-on-surface mb-2">Password</label>
-            <input type="password" name="password" required minlength="6" class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50" placeholder="Min 6 characters" />
+            <label class="block text-sm font-bold text-on-surface mb-2"
+              >Password</label
+            >
+            <input
+              type="password"
+              name="password"
+              required
+              minlength="6"
+              class="w-full bg-surface-container-low border-2 border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50"
+              placeholder="Min 6 characters"
+            />
           </div>
-          <button type="submit" class="w-full editorial-gradient text-on-primary py-3.5 rounded-xl font-bold font-headline text-base shadow-lg shadow-primary/20">
+          <button
+            type="submit"
+            class="w-full editorial-gradient text-on-primary py-3.5 rounded-xl font-bold font-headline text-base shadow-lg shadow-primary/20"
+          >
             <span id="authSubmitText">Login</span>
           </button>
         </form>
         <p class="text-center text-on-surface-variant mt-5 text-sm">
           <span id="authToggleText">Don't have an account?</span>
-          <button id="authToggleBtn" onclick="toggleAuthMode()" class="text-primary font-bold ml-1 hover:text-primary-container transition-colors">Register</button>
+          <button
+            id="authToggleBtn"
+            onclick="toggleAuthMode()"
+            class="text-primary font-bold ml-1 hover:text-primary-container transition-colors"
+          >
+            Register
+          </button>
         </p>
       </div>
     </div>
@@ -279,6 +609,37 @@
         return { response, data };
       }
 
+      function showToast(message, type = "success") {
+        const toast = document.createElement("div");
+        const bgColor =
+          type === "success"
+            ? "bg-tertiary-container text-on-tertiary-container shadow-tertiary/20"
+            : "bg-error-container text-on-error-container shadow-error/20";
+        const icon = type === "success" ? "check_circle" : "error";
+
+        toast.className = `${bgColor} px-4 py-3 rounded-xl shadow-lg border border-outline-variant/30 flex items-center gap-3 transform transition-all duration-300 translate-x-full opacity-0 font-medium text-sm font-headline max-w-sm ml-auto z-[100]`;
+        toast.innerHTML = `<span class="material-symbols-outlined text-xl">${icon}</span><span>${message}</span>`;
+
+        document.getElementById("toastContainer").appendChild(toast);
+
+        requestAnimationFrame(() => {
+          setTimeout(
+            () => toast.classList.remove("translate-x-full", "opacity-0"),
+            10,
+          );
+        });
+
+        setTimeout(() => {
+          toast.classList.add("opacity-0", "translate-x-full");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      function updateAuthUI() {
+        const authButtons = document.getElementById("authButtons");
+        // ... existing auth UI
+      }
+
       function updateAuthUI() {
         const authButtons = document.getElementById("authButtons");
         if (currentUser) {
@@ -319,7 +680,8 @@
         document.getElementById("authModalTitle").textContent = "Welcome Back";
         document.getElementById("authSubmitText").textContent = "Login";
         document.getElementById("nameField").classList.add("hidden");
-        document.getElementById("authToggleText").textContent = "Don't have an account?";
+        document.getElementById("authToggleText").textContent =
+          "Don't have an account?";
         document.getElementById("authToggleBtn").textContent = "Register";
         document.getElementById("authModal").classList.remove("hidden");
         document.getElementById("authModal").classList.add("flex");
@@ -327,10 +689,12 @@
 
       function showRegister() {
         isRegisterMode = true;
-        document.getElementById("authModalTitle").textContent = "Create Account";
+        document.getElementById("authModalTitle").textContent =
+          "Create Account";
         document.getElementById("authSubmitText").textContent = "Get Started";
         document.getElementById("nameField").classList.remove("hidden");
-        document.getElementById("authToggleText").textContent = "Already have an account?";
+        document.getElementById("authToggleText").textContent =
+          "Already have an account?";
         document.getElementById("authToggleBtn").textContent = "Login";
         document.getElementById("authModal").classList.remove("hidden");
         document.getElementById("authModal").classList.add("flex");
@@ -355,7 +719,9 @@
           password: formData.get("password"),
         };
         if (isRegisterMode) body.name = formData.get("name");
-        const endpoint = isRegisterMode ? "/api/auth/register" : "/api/auth/login";
+        const endpoint = isRegisterMode
+          ? "/api/auth/register"
+          : "/api/auth/login";
         const { data } = await apiRequest(endpoint, {
           method: "POST",
           body: JSON.stringify(body),
@@ -365,8 +731,12 @@
           currentUser = data.user;
           updateAuthUI();
           closeAuthModal();
+          showToast(
+            isRegisterMode ? "Account created successfully!" : "Welcome back!",
+            "success",
+          );
         } else {
-          alert(data.error || "Authentication failed");
+          showToast(data.error || "Authentication failed", "error");
         }
       }
 
@@ -382,16 +752,20 @@
         document.getElementById("showtimeSelection").classList.add("hidden");
         document.getElementById("seatSelection").classList.add("hidden");
         document.getElementById("myBookingsSection").classList.add("hidden");
-        document.getElementById("checkoutBar").classList.add("translate-y-full");
+        document
+          .getElementById("checkoutBar")
+          .classList.add("translate-y-full");
         document.getElementById("navBreadcrumb").classList.add("hidden");
 
         const breadcrumb = document.getElementById("navBreadcrumb");
-        
+
         if (section === "movies") {
           document.getElementById("movieSelection").classList.remove("hidden");
           loadMovies();
         } else if (section === "showtimes") {
-          document.getElementById("showtimeSelection").classList.remove("hidden");
+          document
+            .getElementById("showtimeSelection")
+            .classList.remove("hidden");
           breadcrumb.textContent = selectedMovie?.title || "";
           breadcrumb.classList.remove("hidden");
         } else if (section === "seats") {
@@ -399,31 +773,48 @@
           breadcrumb.textContent = `${selectedMovie?.title || ""} - Select Seats`;
           breadcrumb.classList.remove("hidden");
         } else if (section === "bookings") {
-          document.getElementById("myBookingsSection").classList.remove("hidden");
+          document
+            .getElementById("myBookingsSection")
+            .classList.remove("hidden");
           loadMyBookings();
         }
       }
 
       async function loadMovies() {
-        const { data } = await apiRequest("/api/movies");
         const grid = document.getElementById("moviesGrid");
+        grid.innerHTML = Array(10)
+          .fill(0)
+          .map(
+            () => `
+          <div class="relative aspect-[2/3] rounded-2xl overflow-hidden bg-surface-container-low shadow-sm skeleton"></div>
+        `,
+          )
+          .join("");
+
+        const { data } = await apiRequest("/api/movies");
 
         if (data.movies && data.movies.length > 0) {
           moviesData = data.movies;
           grid.innerHTML = data.movies
-            .map((movie, index) => `
+            .map(
+              (movie, index) => `
               <div class="group cursor-pointer" onclick="selectMovie(${movie.id})">
                 <div class="relative aspect-[2/3] rounded-2xl overflow-hidden bg-surface-container-low mb-3 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300">
-                  ${movie.poster_path
-                    ? `<img src="${movie.poster_path}" alt="${movie.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />`
-                    : `<div class="w-full h-full flex items-center justify-center bg-surface-container"><span class="material-symbols-outlined text-5xl text-on-surface-variant/30">movie</span></div>`
+                  ${
+                    movie.poster_path
+                      ? `<img src="${movie.poster_path}" alt="${movie.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />`
+                      : `<div class="w-full h-full flex items-center justify-center bg-surface-container"><span class="material-symbols-outlined text-5xl text-on-surface-variant/30">movie</span></div>`
                   }
-                  ${movie.rating ? `
+                  ${
+                    movie.rating
+                      ? `
                     <div class="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-black text-on-surface shadow-sm flex items-center gap-1">
                       <span class="material-symbols-outlined text-yellow-500 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
                       ${movie.rating.toFixed(1)}
                     </div>
-                  ` : ""}
+                  `
+                      : ""
+                  }
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                     <button class="w-full bg-primary text-on-primary py-2.5 rounded-xl font-bold text-sm shadow-lg">Book Tickets</button>
                   </div>
@@ -431,7 +822,9 @@
                 <h3 class="font-headline font-bold text-base md:text-lg text-on-surface truncate group-hover:text-primary transition-colors">${movie.title}</h3>
                 <p class="text-xs text-on-surface-variant font-medium">Now Showing</p>
               </div>
-            `).join("");
+            `,
+            )
+            .join("");
         } else {
           grid.innerHTML = `
             <div class="col-span-full text-center py-16">
@@ -443,10 +836,18 @@
       }
 
       async function selectMovie(movieId) {
-        const movie = moviesData.find(m => m.id === movieId || m.tmdb_id === movieId);
+        const movie = moviesData.find(
+          (m) => m.id === movieId || m.tmdb_id === movieId,
+        );
         if (!movie) return;
-        
-        selectedMovie = { id: movie.id, tmdbId: movie.tmdb_id, title: movie.title, posterPath: movie.poster_path, rating: movie.rating };
+
+        selectedMovie = {
+          id: movie.id,
+          tmdbId: movie.tmdb_id,
+          title: movie.title,
+          posterPath: movie.poster_path,
+          rating: movie.rating,
+        };
 
         const hero = document.getElementById("movieHero");
         hero.innerHTML = `
@@ -459,23 +860,31 @@
         const detailsCard = document.getElementById("movieDetailsCard");
         detailsCard.innerHTML = `
           <div class="flex flex-col md:flex-row gap-6">
-            ${movie.poster_path ? `
+            ${
+              movie.poster_path
+                ? `
               <div class="w-28 md:w-36 aspect-[2/3] rounded-xl overflow-hidden shadow-xl flex-shrink-0 -mt-20 md:-mt-24 border-4 border-surface-container-lowest">
                 <img src="${movie.poster_path}" alt="${movie.title}" class="w-full h-full object-cover" />
               </div>
-            ` : ""}
+            `
+                : ""
+            }
             <div class="flex-grow">
               <div class="flex flex-wrap gap-2 mb-2">
                 <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Now Showing</span>
               </div>
               <h2 class="text-3xl md:text-4xl font-headline font-extrabold text-on-surface tracking-tight mb-2">${movie.title}</h2>
               <div class="flex flex-wrap items-center gap-3 text-on-surface-variant text-sm font-medium">
-                ${movie.rating ? `
+                ${
+                  movie.rating
+                    ? `
                   <span class="flex items-center gap-1">
                     <span class="material-symbols-outlined text-yellow-500 text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
                     <span class="font-bold text-on-surface">${movie.rating.toFixed(1)}</span>
                   </span>
-                ` : ""}
+                `
+                    : ""
+                }
               </div>
             </div>
           </div>
@@ -485,23 +894,25 @@
         const cinemasList = document.getElementById("cinemasList");
 
         if (data.showtimes && data.showtimes.length > 0) {
-         cinemasList.innerHTML = `
+          cinemasList.innerHTML = `
             <div class="bg-surface-container-lowest rounded-3xl p-6 md:p-8 shadow-sm">
               <h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-6 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">theaters</span>
                 Available Showtimes
               </h3>
               <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                ${data.showtimes.map(st => {
-                  const showTime = new Date(st.show_time);
-                  return `
+                ${data.showtimes
+                  .map((st) => {
+                    const showTime = new Date(st.show_time);
+                    return `
                     <button onclick="selectShowtime(${st.id}, ${st.screen_number}, '${st.show_time}')" class="flex flex-col items-center justify-center p-4 border-2 border-outline-variant/20 rounded-2xl hover:border-primary hover:bg-primary/5 transition-all text-left">
                       <span class="text-lg font-black text-on-surface">${showTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
-                      <span class="text-xs text-on-surface-variant font-medium mt-1">${showTime.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                      <span class="text-xs text-on-surface-variant font-medium mt-1">${showTime.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}</span>
                       <span class="text-[10px] text-primary font-bold mt-2 uppercase tracking-wider">Screen ${st.screen_number}</span>
                     </button>
                   `;
-                }).join("")}
+                  })
+                  .join("")}
               </div>
             </div>
           `;
@@ -541,7 +952,7 @@
                 </span>
                 <span class="flex items-center gap-1.5">
                   <span class="material-symbols-outlined text-primary text-lg">schedule</span>
-                  ${showTimeDate.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  ${showTimeDate.toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}
                 </span>
               </div>
             </div>
@@ -574,31 +985,35 @@
         container.innerHTML = "";
 
         const sortedSeats = [...seats].sort((a, b) => {
-          if (a.rowLabel !== b.rowLabel) return a.rowLabel.localeCompare(b.rowLabel);
+          if (a.rowLabel !== b.rowLabel)
+            return a.rowLabel.localeCompare(b.rowLabel);
           return a.seatNumber - b.seatNumber;
         });
-        
+
         const rowsMap = {};
-        sortedSeats.forEach(seat => {
+        sortedSeats.forEach((seat) => {
           if (!rowsMap[seat.rowLabel]) rowsMap[seat.rowLabel] = [];
           rowsMap[seat.rowLabel].push(seat);
         });
-        
+
         const rowLabels = Object.keys(rowsMap).sort();
-        
+
         renderSeatLegend();
 
         const grid = document.createElement("div");
         grid.className = "flex flex-col gap-2 md:gap-3";
-        
-        rowLabels.forEach(rowLabel => {
-          const row = rowsMap[rowLabel].sort((a, b) => a.seatNumber - b.seatNumber);
-          
+
+        rowLabels.forEach((rowLabel) => {
+          const row = rowsMap[rowLabel].sort(
+            (a, b) => a.seatNumber - b.seatNumber,
+          );
+
           const rowDiv = document.createElement("div");
           rowDiv.className = "flex items-center gap-1.5 md:gap-2";
 
           const label = document.createElement("span");
-          label.className = "w-5 md:w-6 text-[10px] font-bold text-on-surface-variant/50 text-center";
+          label.className =
+            "w-5 md:w-6 text-[10px] font-bold text-on-surface-variant/50 text-center";
           label.textContent = rowLabel;
           rowDiv.appendChild(label);
 
@@ -614,27 +1029,29 @@
 
             const isSelected = selectedSeats.includes(seat.id);
             const btn = document.createElement("button");
-            
-            const baseClasses = "w-8 h-8 md:w-10 md:h-10 rounded-lg text-[10px] md:text-xs font-bold seat-transition flex items-center justify-center";
-            
+
+            const baseClasses =
+              "w-8 h-8 md:w-10 md:h-10 rounded-lg text-[10px] md:text-xs font-bold seat-transition flex items-center justify-center";
+
             const typeColors = {
-              'normal': 'bg-surface-container-high border-outline-variant/30',
-              'deluxe': 'bg-tertiary-container border-tertiary/40',
-              'recliner': 'bg-primary-container border-primary/50'
+              normal: "bg-surface-container-high border-outline-variant/30",
+              deluxe: "bg-tertiary-container border-tertiary/40",
+              recliner: "bg-primary-container border-primary/50",
             };
             const selectedTypeColors = {
-              'normal': 'bg-secondary text-on-secondary',
-              'deluxe': 'bg-tertiary text-on-tertiary',
-              'recliner': 'bg-primary text-on-primary'
+              normal: "bg-secondary text-on-secondary",
+              deluxe: "bg-tertiary text-on-tertiary",
+              recliner: "bg-primary text-on-primary",
             };
-            const typeColor = typeColors[seat.type] || typeColors['normal'];
+            const typeColor = typeColors[seat.type] || typeColors["normal"];
 
             if (seat.isBooked) {
               btn.className = `${baseClasses} bg-inverse-surface/10 cursor-not-allowed opacity-50`;
               btn.innerHTML = `<span class="material-symbols-outlined text-xs">close</span>`;
               btn.disabled = true;
             } else if (isSelected) {
-              const selColor = selectedTypeColors[seat.type] || 'bg-primary text-on-primary';
+              const selColor =
+                selectedTypeColors[seat.type] || "bg-primary text-on-primary";
               btn.className = `${baseClasses} ${selColor} shadow-lg scale-105`;
               btn.textContent = seat.label;
             } else {
@@ -656,22 +1073,35 @@
 
         container.appendChild(grid);
       }
-      
+
       function renderSeatLegend() {
         const existingLegend = document.getElementById("seatTypeLegend");
         if (existingLegend) existingLegend.remove();
-        
+
         const legendDiv = document.createElement("div");
         legendDiv.id = "seatTypeLegend";
-        legendDiv.className = "flex flex-wrap justify-center gap-3 md:gap-6 mb-6 px-4";
-        
+        legendDiv.className =
+          "flex flex-wrap justify-center gap-3 md:gap-6 mb-6 px-4";
+
         const types = [
-          { name: 'Normal', color: 'bg-surface-container-high border border-outline-variant/30', price: '₹150' },
-          { name: 'Deluxe', color: 'bg-tertiary-container border border-tertiary/40', price: '₹250' },
-          { name: 'Recliner', color: 'bg-primary-container border border-primary/50', price: '₹400' }
+          {
+            name: "Normal",
+            color: "bg-surface-container-high border border-outline-variant/30",
+            price: "₹150",
+          },
+          {
+            name: "Deluxe",
+            color: "bg-tertiary-container border border-tertiary/40",
+            price: "₹250",
+          },
+          {
+            name: "Recliner",
+            color: "bg-primary-container border border-primary/50",
+            price: "₹400",
+          },
         ];
-        
-        types.forEach(type => {
+
+        types.forEach((type) => {
           const item = document.createElement("div");
           item.className = "flex items-center gap-2";
           item.innerHTML = `
@@ -681,12 +1111,17 @@
           `;
           legendDiv.appendChild(item);
         });
-        
+
         const seatMap = document.getElementById("seatMap");
         seatMap.parentNode.insertBefore(legendDiv, seatMap);
       }
 
       function toggleSeat(seatId) {
+        if (!selectedSeats.includes(seatId) && selectedSeats.length >= 10) {
+          showToast("You can only book up to 10 seats per showtime.", "error");
+          return;
+        }
+
         const index = selectedSeats.indexOf(seatId);
         if (index > -1) {
           selectedSeats.splice(index, 1);
@@ -704,17 +1139,29 @@
 
         if (selectedSeats.length > 0) {
           bar.classList.remove("translate-y-full");
-          
-          const selectedSeatObjs = seats.filter(s => selectedSeats.includes(s.id));
-          const totalPrice = selectedSeatObjs.reduce((sum, s) => sum + s.price, 0);
+
+          const selectedSeatObjs = seats.filter((s) =>
+            selectedSeats.includes(s.id),
+          );
+          const totalPrice = selectedSeatObjs.reduce(
+            (sum, s) => sum + s.price,
+            0,
+          );
           totalEl.textContent = `₹${totalPrice.toFixed(0)}`;
-          
+
           seatsEl.innerHTML = selectedSeatObjs
-            .sort((a, b) => a.rowLabel.localeCompare(b.rowLabel) || a.seatNumber - b.seatNumber)
-            .map(s => {
-              const typeClass = s.type === 'recliner' ? 'bg-primary text-on-primary' :
-                               s.type === 'deluxe' ? 'bg-tertiary text-on-tertiary' :
-                               'bg-secondary text-on-secondary';
+            .sort(
+              (a, b) =>
+                a.rowLabel.localeCompare(b.rowLabel) ||
+                a.seatNumber - b.seatNumber,
+            )
+            .map((s) => {
+              const typeClass =
+                s.type === "recliner"
+                  ? "bg-primary text-on-primary"
+                  : s.type === "deluxe"
+                    ? "bg-tertiary text-on-tertiary"
+                    : "bg-secondary text-on-secondary";
               return `<span class="px-2 py-0.5 ${typeClass} text-[10px] font-bold rounded" title="${s.typeDisplayName}">${s.label}</span>`;
             })
             .join("");
@@ -723,16 +1170,47 @@
         }
       }
 
-      async function confirmBooking() {
+      function showPaymentModal() {
         if (!currentUser) {
-          alert("Please login to book seats");
+          showToast("Please login to proceed", "error");
           showLogin();
           return;
         }
         if (selectedSeats.length === 0) {
-          alert("Please select at least one seat");
+          showToast("Please select at least one seat", "error");
           return;
         }
+
+        const selectedSeatObjs = seats.filter((s) =>
+          selectedSeats.includes(s.id),
+        );
+        const totalPrice = selectedSeatObjs.reduce(
+          (sum, s) => sum + s.price,
+          0,
+        );
+        document.getElementById("paymentTotalAmount").textContent =
+          `₹${totalPrice.toFixed(0)}`;
+
+        document.getElementById("paymentModal").classList.remove("hidden");
+        document.getElementById("paymentModal").classList.add("flex");
+      }
+
+      function closePaymentModal() {
+        document.getElementById("paymentModal").classList.add("hidden");
+        document.getElementById("paymentModal").classList.remove("flex");
+        document.getElementById("paymentLoading").classList.add("hidden");
+        document.getElementById("paymentLoading").classList.remove("flex");
+      }
+
+      async function processPayment(e) {
+        e.preventDefault();
+
+        // Show loading spinner
+        document.getElementById("paymentLoading").classList.remove("hidden");
+        document.getElementById("paymentLoading").classList.add("flex");
+
+        // Simulate payment delay
+        await new Promise((resolve) => setTimeout(resolve, 1500));
 
         const { data } = await apiRequest("/api/bookings", {
           method: "POST",
@@ -742,17 +1220,27 @@
           }),
         });
 
+        closePaymentModal();
+
         if (data.success) {
-          const bookedLabels = seats
-            .filter(s => selectedSeats.includes(s.id))
-            .map(s => s.label)
-            .sort((a, b) => a.localeCompare(b));
-          alert(`Booking confirmed! Seats: ${bookedLabels.join(", ")}`);
+          confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ["#b8083b", "#db2d51", "#ffb2b8", "#ffffff"],
+          });
+
+          showToast("Payment Successful! Booking confirmed.", "success");
           selectedSeats = [];
           await loadSeats(selectedShowtime.id);
           updateSelectedSeatsBar();
+
+          // Slight delay to let user see success state before routing to bookings screen
+          setTimeout(() => {
+            showSection("bookings");
+          }, 2000);
         } else {
-          alert(data.error || "Booking failed");
+          showToast(data.error || "Booking failed", "error");
         }
       }
 
@@ -765,44 +1253,84 @@
       }
 
       async function loadMyBookings() {
-        const { data } = await apiRequest("/api/bookings/my");
         const list = document.getElementById("bookingsList");
+        list.innerHTML = Array(3)
+          .fill(0)
+          .map(
+            () => `
+          <div class="bg-surface-container-low h-32 rounded-2xl skeleton"></div>
+        `,
+          )
+          .join("");
+
+        const { data } = await apiRequest("/api/bookings/my");
 
         if (data.bookings && data.bookings.length > 0) {
-          list.innerHTML = data.bookings.map(b => {
-            const showTime = new Date(b.show_time);
-            return `
-              <div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
-                <div class="flex gap-4 items-start">
-                  ${b.poster_path ? `
-                    <div class="w-14 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-md">
-                      <img src="${b.poster_path}" alt="${b.title}" class="w-full h-full object-cover" />
-                    </div>
-                  ` : ""}
-                  <div>
-                    <h3 class="font-headline font-bold text-lg text-on-surface">${b.title}</h3>
-                    <div class="flex flex-wrap items-center gap-3 mt-1 text-sm text-on-surface-variant">
-                      <span class="flex items-center gap-1">
-                        <span class="material-symbols-outlined text-primary text-base">theater_comedy</span>
-                        Screen ${b.screen_number}
-                      </span>
-                      <span>•</span>
-                      <span>${showTime.toLocaleString([], { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
-                    </div>
-                    <div class="mt-2">
-                      <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-full text-xs font-bold">
-                        <span class="material-symbols-outlined text-sm">event_seat</span>
-                        Seat ${b.seat_id}
-                      </span>
+          list.innerHTML = data.bookings
+            .map((b) => {
+              const showTime = new Date(b.show_time);
+              const qrDataUrl = `cinepremiere_ticket:${b.booking_id}:${b.seat_id}`;
+
+              return `
+              <div class="bg-surface-container-lowest rounded-2xl shadow-sm flex flex-col sm:flex-row items-stretch border border-outline-variant/20 overflow-hidden transform hover:scale-[1.01] transition-transform">
+                <div class="flex-grow p-5 sm:p-6 sm:ticket-dashed ticket-cutout-right relative bg-white">
+                  <div class="flex gap-4 items-start">
+                    ${
+                      b.poster_path
+                        ? `
+                      <div class="w-16 sm:w-20 aspect-[2/3] rounded-lg overflow-hidden flex-shrink-0 shadow-md">
+                        <img src="${b.poster_path}" alt="${b.title}" class="w-full h-full object-cover" />
+                      </div>
+                    `
+                        : ""
+                    }
+                    <div class="flex-1">
+                      <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-headline font-black text-lg md:text-xl text-on-surface leading-tight">${b.title}</h3>
+                        <span class="bg-surface-container text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Ticket</span>
+                      </div>
+                      <div class="text-sm font-medium text-on-surface-variant flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">event</span>${showTime.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" })}</p>
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">schedule</span>${showTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                        <p class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px] text-primary">theaters</span>Screen ${b.screen_number}</p>
+                      </div>
+                      <div class="mt-4 pt-4 border-t border-outline-variant/30 flex justify-between items-center">
+                        <div class="flex flex-col">
+                          <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Seat</span>
+                          <span class="font-headline font-black text-xl text-primary">${b.row_label}${b.seat_number}</span>
+                        </div>
+                         <button onclick="cancelBooking(${b.booking_id})" class="text-sm font-bold text-error/80 hover:text-error hover:bg-error-container/50 px-3 py-1.5 rounded-lg transition-colors">
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <button onclick="cancelBooking(${b.booking_id})" class="text-sm font-bold text-error hover:bg-error-container px-4 py-2 rounded-lg transition-colors">
-                  Cancel
-                </button>
+                <!-- Right Side QR Code -->
+                <div class="bg-surface-container-low sm:w-48 p-5 sm:p-6 flex flex-col items-center justify-center ticket-cutout-left relative">
+                  <div class="w-24 h-24 sm:w-28 sm:h-28 bg-white p-2 rounded-lg shadow-sm">
+                    <canvas id="qr-${b.booking_id}" class="w-full h-full" data-code="${qrDataUrl}"></canvas>
+                  </div>
+                  <span class="text-[10px] font-mono text-on-surface-variant/50 mt-3 font-bold tracking-widest">ID: #${b.booking_id.toString().padStart(6, "0")}</span>
+                </div>
               </div>
             `;
-          }).join("");
+            })
+            .join("");
+
+          // Render QR Codes after injecting HTML
+          setTimeout(() => {
+            data.bookings.forEach((b) => {
+              const canvas = document.getElementById(`qr-${b.booking_id}`);
+              if (canvas) {
+                QRCode.toCanvas(canvas, canvas.dataset.code, {
+                  width: 120,
+                  margin: 1,
+                  color: { dark: "#b8083b", light: "#ffffff" },
+                });
+              }
+            });
+          }, 100);
         } else {
           list.innerHTML = `
             <div class="bg-surface-container-lowest rounded-3xl p-12 text-center">
@@ -818,12 +1346,15 @@
       }
 
       async function cancelBooking(bookingId) {
-        if (!confirm("Are you sure you want to cancel this booking?")) return;
-        const { data } = await apiRequest(`/api/bookings/${bookingId}`, { method: "DELETE" });
+        if (!confirm("Are you sure you want to cancel this ticket?")) return;
+        const { data } = await apiRequest(`/api/bookings/${bookingId}`, {
+          method: "DELETE",
+        });
         if (data.success) {
+          showToast("Ticket cancelled successfully.", "success");
           await loadMyBookings();
         } else {
-          alert(data.error || "Failed to cancel booking");
+          showToast(data.error || "Failed to cancel ticket", "error");
         }
       }
 

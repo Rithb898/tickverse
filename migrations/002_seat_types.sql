@@ -23,10 +23,10 @@ ALTER TABLE seats ADD COLUMN IF NOT EXISTS row_label VARCHAR(1);
 ALTER TABLE seats ADD COLUMN IF NOT EXISTS seat_number INTEGER;
 
 -- Clear existing seats and insert new ones
--- 50 seats: 5 rows (A-E), 10 seats per row
--- Rows A-C: Normal (front)
--- Row D: Deluxe (header)
--- Row E: Recliner (back)
+-- 80 seats: 8 rows (A-H), 10 seats per row
+-- Rows A-E: Normal (front)
+-- Rows F-G: Deluxe (middle)
+-- Row H: Recliner (back)
 DELETE FROM bookings;
 DELETE FROM seats;
 
@@ -35,11 +35,11 @@ SELECT
     CHR(65 + row_num) as row_label,
     seat_num as seat_number,
     CASE 
-        WHEN row_num = 4 THEN 3  -- Row E: Recliner (last row)
-        WHEN row_num = 3 THEN 2  -- Row D: Deluxe
-        ELSE 1                    -- Rows A-C: Normal
+        WHEN row_num = 7 THEN 3  -- Row H: Recliner (last row)
+        WHEN row_num IN (5, 6) THEN 2  -- Rows F-G: Deluxe
+        ELSE 1                    -- Rows A-E: Normal
     END as seat_type_id
-FROM generate_series(0, 4) as row_num
+FROM generate_series(0, 7) as row_num
 CROSS JOIN generate_series(1, 10) as seat_num;
 
 -- Create index for seat queries
