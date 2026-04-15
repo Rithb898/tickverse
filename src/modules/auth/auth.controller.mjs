@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import pool from '../lib/db.mjs';
-import { generateToken } from '../lib/jwt.mjs';
+import pool from '../../lib/db.mjs';
+import { generateToken } from '../../lib/jwt.mjs';
 
 const SALT_ROUNDS = 10;
 
